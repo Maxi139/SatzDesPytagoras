@@ -3,12 +3,25 @@ var b = document.getElementById("b");
 var c = document.getElementById("c");
 var button = document.getElementById("button");
 
-//FIXME: Fix it
-function pythagoras(a, b, c) {
-  var c = Math.sqrt(a * a + b * b);
-  c = c.toFixed(2);
-  console.log(c);
-  return c;
+function pythagoras(a, b, c, output) {
+  if (output == "a") {
+    var output = Math.sqrt(b * b * -1 + c * c);
+    output = output.toFixed(2);
+    console.log(output);
+    return output;
+  }
+  if (output == "b") {
+    var output = Math.sqrt(a * a * -1 + c * c);
+    output = output.toFixed(2);
+    console.log(output);
+    return output;
+  }
+  if (output == "c") {
+    var output = Math.sqrt(a * a + b * b);
+    output = output.toFixed(2);
+    console.log(output);
+    return output;
+  }
 }
 
 function update(get) {
@@ -26,13 +39,29 @@ function update(get) {
 button.addEventListener("click", function () {
   update(true);
   if (a && b) {
-    c = pythagoras(parseFloat(a), parseFloat(b), parseFloat(c));
+    c = pythagoras(parseFloat(a), parseFloat(b), parseFloat(c), "c");
     update(false);
   } else if (a && c) {
-    b = pythagoras(parseFloat(c), parseFloat(a * -1), parseFloat(b));
+    b = pythagoras(parseFloat(a), parseFloat(b), parseFloat(c), "b");
     update(false);
   } else if (b && c) {
-    a = pythagoras(parseFloat(c), parseFloat(b * -1), parseFloat(c));
+    a = pythagoras(parseFloat(a), parseFloat(b), parseFloat(c), "a");
     update(false);
+  }
+});
+
+document.addEventListener("keydown", function (event) {
+  if (event.keyCode === 13) {
+    update(true);
+    if (a && b) {
+      c = pythagoras(parseFloat(a), parseFloat(b), parseFloat(c), "c");
+      update(false);
+    } else if (a && c) {
+      b = pythagoras(parseFloat(a), parseFloat(b), parseFloat(c), "b");
+      update(false);
+    } else if (b && c) {
+      a = pythagoras(parseFloat(a), parseFloat(b), parseFloat(c), "a");
+      update(false);
+    }
   }
 });
